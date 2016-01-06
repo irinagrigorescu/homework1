@@ -1,0 +1,31 @@
+geolocate:
+  - location: "London"
+    anslat: 51.5073509
+    anslong: -0.1277583
+  - location: "Bucharest"
+    anslat: 44.4267674
+    anslong: 26.1025384
+  - location: "Geneva"
+    anslat: 46.2043907
+    anslong: 6.1431577
+
+location_sequence:
+  - start: "London"
+    end: "Bucharest"
+    steps: 1
+    answer: [[51.5073509, -0.1277583]]
+  - start: "London"
+    end: "Bucharest"
+    steps: 2
+    answer: [[51.5073509, -0.1277583], [44.4267674, 26.1025384]]
+
+green_between:
+  - start: 0
+    end: 0
+    steps: 1
+    answer: [89338]
+  - start: 2
+    end: 4
+    steps: 2
+    answer: [93987, 123102]
+
