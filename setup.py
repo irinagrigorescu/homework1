@@ -5,6 +5,6 @@ setup(
     version = "0.1",
     packages = find_packages(exclude=['*test']),
     scripts = ['scripts/greengraph'],
-    install_requires = ['argparse', 'numpy', 'geopy', 'StringIO', 'matplotlib',
+    install_requires = ['argparse', 'pypng', 'numpy', 'geopy', 'StringIO', 'matplotlib',
         'requests']
 )
