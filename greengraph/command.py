@@ -1,3 +1,4 @@
+import sys
 from argparse import ArgumentParser
 from matplotlib import pyplot as plt
 from greengraph import Greengraph 
@@ -9,6 +10,11 @@ def process():
     parser.add_argument('--to', '-t', dest = 'toCity')
     parser.add_argument('--steps', '-s')
     parser.add_argument('--out', '-o')
+
+    # Print help message even if no flag is provided
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
 
     args = parser.parse_args()
 
