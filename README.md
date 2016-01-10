@@ -12,7 +12,8 @@ An example output file can be viewed in greengraph/LondonBucharest.png
 
 **Usage**:
 
-```greengraph [-h] [--from FROMCITY] [--to TOCITY] [--steps STEPS] [--out OUT]
+```
+greengraph [-h] [--from FROMCITY] [--to TOCITY] [--steps STEPS] [--outOUT]
 
 optional arguments:
     -h, --help   show this help message and exit
