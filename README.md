@@ -7,7 +7,7 @@ This is a small project that plots the green graph by using a start point, an en
 and the name of the file you want the graph to be stored at.
  
 
-An example output file can be viewed in greengraph/LondonBucharest.png
+An example output file can be viewed in _greengraph/LondonBucharest.png_
 
 
 **Usage**:
