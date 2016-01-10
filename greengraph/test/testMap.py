@@ -1,10 +1,12 @@
+import os
 import yaml
+import numpy as np
 import unittest
 from ..map import Map
 from nose.tools import *
 from mock import Mock, patch
 
-class TestMap(unittest.Testcase):
+class TestMap(unittest.TestCase):
     
     def setUp(self):
         with open(os.path.join(os.path.dirname(__file__), 'fixtures', 'samplesMap.yaml')) as fixture_file:
@@ -19,5 +21,5 @@ class TestMap(unittest.Testcase):
     def test_show_green(self):
         pass
 
-in __name__ == "__main__":
+if __name__ == "__main__":
     unittest.main()
