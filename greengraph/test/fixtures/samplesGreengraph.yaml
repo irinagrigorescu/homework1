@@ -10,12 +10,12 @@ geocode:
         long: 6.1431577
 
 location_sequence:
-  - start: [51.5073509, -0.1277583]
-    end: [44.4267674, 26.1025384]
+  - start: "London"
+    end: "Bucharest"
     steps: 1
     answer: [[51.5073509, -0.1277583]]
-  - start: [51.5073509, -0.1277583]
-    end: [44.4267674, 26.1025384]
+  - start: "London"
+    end: "Bucharest"
     steps: 2
     answer: [[51.5073509, -0.1277583], [44.4267674, 26.1025384]]
 

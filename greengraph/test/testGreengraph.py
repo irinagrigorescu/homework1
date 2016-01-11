@@ -1,6 +1,5 @@
 import os
 import yaml
-import numpy as np
 import unittest
 from .. import greengraph
 from nose.tools import *
@@ -44,6 +43,9 @@ class TestGreengraph(unittest.TestCase):
             '''
             return [Location((37.3890924, -5.9844589, 0.0))]
 
+    '''
+    Testing geolocate
+    '''
     def test_geolocate(self):
         '''
         Mock function for geocode method in GoogleV3
@@ -65,23 +67,27 @@ class TestGreengraph(unittest.TestCase):
                 mock_geocode.assert_called_with(location, exactly_one=False)
                 assert(abs(ans[0] - answer["lat"]) < self.ALLOWED_ERROR)
                 assert(abs(ans[1] - answer["long"]) < self.ALLOWED_ERROR)
-       
+    
+    '''
+    Testing location_sequence
+    '''
     def test_location_sequence(self):
-        pass
-        '''
-        Going through all the testcases for the location_sequence method
-        '''
-        '''
-        for testcase in self.fixtures['location_sequence']:
-            start = tuple(testcase.pop('start'))
-            end = tuple(testcase.pop('end'))
-            steps = testcase.pop('steps')
-            answer = np.vstack(testcase.pop('answer'))
-            
-            geo = Greengraph(0, 0)
-            return_val = geo.location_sequence(start, end, steps)
-            assert(np.array_equal(return_val, answer))
-        '''
+        from numpy import array, array_equal
+        gg = greengraph.Greengraph('Lima', 'Caracas')
+        
+        for test_case in self.fixtures['location_sequence']:
+            print test_case
+            start_coords = self.fixtures['geocode'][test_case['start']]
+            end_coords = self.fixtures['geocode'][test_case['end']]
+            print start_coords
+            ans = gg.location_sequence(
+                    (start_coords['lat'], start_coords['long']),
+                    (end_coords['lat'], end_coords['long']),
+                    test_case['steps'])
+            '''
+            Check result of location_sequence
+            '''
+            assert(array_equal(array(test_case['answer']), ans))
 
     def test_green_between(self):
         '''
