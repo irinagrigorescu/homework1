@@ -2,7 +2,7 @@ import os
 import yaml
 import unittest
 from .. import map as app_map
-from mock import Mock, patch
+from mock import patch
 import requests
 
 '''
@@ -15,6 +15,7 @@ class TestMap(unittest.TestCase):
         Setting up some attributes
         '''
         self.YAMLFILE = 'samplesMap.yaml'
+        self.EPS = 0.00001
         '''
         Loading fixtures from samplesMap.yaml file
         '''
@@ -105,8 +106,39 @@ class TestMap(unittest.TestCase):
             '''
             assert(r == self.fixtures['green_no'])
 
+    '''
+    Testing show_green
+    '''
     def test_show_green(self):
-        pass
+        import numpy as np
+        from StringIO import StringIO
+        from matplotlib import image as img
+
+        with patch.object(requests, "get", 
+                side_effect=self.mock_requests_get) as mf:
+            my_map = app_map.Map(self.fixtures['long'], self.fixtures['lat'])
+            thresholds = self.fixtures['thresholds']
+            green_nos = self.fixtures['green_no']
+            for threshold, green_no in zip(thresholds, green_nos):
+                '''
+                Get the green map
+                '''
+                green_array = img.imread(StringIO(my_map.show_green(threshold)))
+                '''
+                Check that the red and blue channels are black
+                '''
+                assert(np.all(green_array[:,:,0] == 0))
+                assert(np.all(green_array[:,:,2] == 0))
+                '''
+                Check that the number of green pixels is correct
+                '''
+                assert(abs(np.sum(green_array[:,:,1]) - green_no) < self.EPS)
+                '''
+                Check that the green pixels were correctly identified
+                '''
+                for i,j in [(i,j) for i in range(10) for j in range(10)]:
+                    assert((green_array[i,j,1] == 1) == (((i+j) > threshold*i)
+                        and ((i+j) > threshold*j)))
 
 if __name__ == "__main__":
     unittest.main()
