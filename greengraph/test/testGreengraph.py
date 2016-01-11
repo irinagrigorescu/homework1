@@ -50,7 +50,6 @@ class TestGreengraph(unittest.TestCase):
         '''
         Mock function for geocode method in GoogleV3
         '''
-        print "test_geolocate"
         with patch.object(greengraph.geopy.geocoders.GoogleV3, 'geocode',
                 side_effect = self.geocode_side_effect) as mock_geocode:
             '''
@@ -76,12 +75,9 @@ class TestGreengraph(unittest.TestCase):
         from numpy import array, array_equal
 
         gg = greengraph.Greengraph('Lima', 'Caracas')
-        print "test_location_sequence"
         for test_case in self.fixtures['location_sequence']:
-            print test_case
             start_coords = self.fixtures['geocode'][test_case['start']]
             end_coords = self.fixtures['geocode'][test_case['end']]
-            print start_coords
             ans = gg.location_sequence(
                     (start_coords['lat'], start_coords['long']),
                     (end_coords['lat'], end_coords['long']),
@@ -95,7 +91,6 @@ class TestGreengraph(unittest.TestCase):
     Testing green_between
     '''
     def test_green_between(self):
-        print "test_green_between"
         '''
         Create mock function for geocode
         '''
