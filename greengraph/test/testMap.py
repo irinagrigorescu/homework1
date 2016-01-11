@@ -110,6 +110,7 @@ class TestMap(unittest.TestCase):
     Testing show_green
     '''
     def test_show_green(self):
+        print "test_show_green"
         import numpy as np
         from StringIO import StringIO
         from matplotlib import image as img
@@ -123,6 +124,8 @@ class TestMap(unittest.TestCase):
                 '''
                 Get the green map
                 '''
+                print threshold
+                print green_no
                 green_array = img.imread(StringIO(my_map.show_green(threshold)))
                 '''
                 Check that the red and blue channels are black
