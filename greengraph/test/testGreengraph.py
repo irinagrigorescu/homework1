@@ -1,26 +1,27 @@
-import os
 import yaml
 import unittest
 from .. import greengraph
-from mock import Mock, patch
-
-YAMLFILE = 'samplesGreengraph.yaml'
+from mock import patch
 
 '''
 Class for testing Greengraph
 '''
 class TestGreengraph(unittest.TestCase):
     
+    '''
+    Setup method
+    '''
     def setUp(self):
+        from os.path import join, dirname
         '''
         Setting up some attributes
         '''
-        self.YAMLFILE = 'samplesGreengraph.yaml'
-        self.ALLOWED_ERROR = 0.00001
+        self.yamlfile = 'samplesGreengraph.yaml'
+        self.eps = 0.00001
         '''
         Loading fixtures from samplesGreengraph.yaml file
         '''
-        with open(os.path.join(os.path.dirname(__file__), 'fixtures', self.YAMLFILE)) as fixture_file:
+        with open(join(dirname(__file__), 'fixtures', self.yamlfile)) as fixture_file:
             self.fixtures = yaml.load(fixture_file)
 
     '''
@@ -65,16 +66,16 @@ class TestGreengraph(unittest.TestCase):
             for location, answer in self.fixtures['geocode'].iteritems():
                 ans = gg.geolocate(location)
                 mock_geocode.assert_called_with(location, exactly_one=False)
-                assert(abs(ans[0] - answer["lat"]) < self.ALLOWED_ERROR)
-                assert(abs(ans[1] - answer["long"]) < self.ALLOWED_ERROR)
+                assert(abs(ans[0] - answer["lat"]) < self.eps)
+                assert(abs(ans[1] - answer["long"]) < self.eps)
     
     '''
     Testing location_sequence
     '''
     def test_location_sequence(self):
         from numpy import array, array_equal
-        gg = greengraph.Greengraph('Lima', 'Caracas')
 
+        gg = greengraph.Greengraph('Lima', 'Caracas')
         print "test_location_sequence"
         for test_case in self.fixtures['location_sequence']:
             print test_case
