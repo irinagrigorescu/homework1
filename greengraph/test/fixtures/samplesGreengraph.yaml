@@ -1,13 +1,13 @@
-geolocate:
-  - location: "London"
-    anslat: 51.5073509
-    anslong: -0.1277583
-  - location: "Bucharest"
-    anslat: 44.4267674
-    anslong: 26.1025384
-  - location: "Geneva"
-    anslat: 46.2043907
-    anslong: 6.1431577
+geocode:
+    London:
+        lat: 51.5073509
+        long: -0.1277583
+    Bucharest:
+        lat: 44.4267674
+        long: 26.1025384
+    Geneva:
+        lat: 46.2043907
+        long: 6.1431577
 
 location_sequence:
   - start: [51.5073509, -0.1277583]
