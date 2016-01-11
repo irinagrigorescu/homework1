@@ -1,4 +1,3 @@
-import os
 import yaml
 import unittest
 from .. import map as app_map
@@ -9,18 +8,21 @@ import requests
 Class for testing Map
 '''
 class TestMap(unittest.TestCase):
-    
+
+    '''
+    Setup method
+    '''
     def setUp(self):
+        from os.path import join, dirname
         '''
         Setting up some attributes
         '''
-        self.YAMLFILE = 'samplesMap.yaml'
-        self.EPS = 0.00001
+        self.yamlfile = 'samplesMap.yaml'
+        self.eps = 0.00001
         '''
         Loading fixtures from samplesMap.yaml file
         '''
-        with open(os.path.join(os.path.dirname(__file__), 'fixtures',
-            self.YAMLFILE)) as fixture_file:
+        with open(join(dirname(__file__), 'fixtures', self.yamlfile)) as fixture_file:
             self.fixtures = yaml.load(fixture_file)
 
     '''
@@ -68,7 +70,6 @@ class TestMap(unittest.TestCase):
     Testing test_green
     '''
     def test_green(self):
-        print "test_green"
         with patch.object(requests, "get", 
                           side_effect=self.mock_requests_get) as mf:
             '''
@@ -78,7 +79,6 @@ class TestMap(unittest.TestCase):
 
             for threshold in self.fixtures['thresholds']:
                 bool_map = my_map.green(threshold)
-                #print bool_map
                 ''' 
                 Check that the green pixels were correctly identified
                 '''
@@ -90,7 +90,6 @@ class TestMap(unittest.TestCase):
     Testing count_green
     '''
     def test_count_green(self):
-        print "test_count_green"
         with patch.object(requests, "get",
                 side_effect=self.mock_requests_get) as mf:
             my_map = app_map.Map(self.fixtures['long'], self.fixtures['lat'])
@@ -99,8 +98,6 @@ class TestMap(unittest.TestCase):
             Counting the number of green pixels for different thresholds
             '''
             r = map(my_map.count_green, self.fixtures['thresholds'])
-            print r
-            print self.fixtures['green_no']
             '''
             Checking the values
             '''
@@ -110,7 +107,6 @@ class TestMap(unittest.TestCase):
     Testing show_green
     '''
     def test_show_green(self):
-        print "test_show_green"
         import numpy as np
         from StringIO import StringIO
         from matplotlib import image as img
@@ -124,8 +120,6 @@ class TestMap(unittest.TestCase):
                 '''
                 Get the green map
                 '''
-                print threshold
-                print green_no
                 green_array = img.imread(StringIO(my_map.show_green(threshold)))
                 '''
                 Check that the red and blue channels are black
@@ -135,7 +129,7 @@ class TestMap(unittest.TestCase):
                 '''
                 Check that the number of green pixels is correct
                 '''
-                assert(abs(np.sum(green_array[:,:,1]) - green_no) < self.EPS)
+                assert(abs(np.sum(green_array[:,:,1]) - green_no) < self.eps)
                 '''
                 Check that the green pixels were correctly identified
                 '''
