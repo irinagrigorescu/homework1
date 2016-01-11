@@ -2,7 +2,6 @@ import os
 import yaml
 import unittest
 from .. import greengraph
-from nose.tools import *
 from mock import Mock, patch
 
 YAMLFILE = 'samplesGreengraph.yaml'
