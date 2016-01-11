@@ -50,6 +50,7 @@ class TestGreengraph(unittest.TestCase):
         '''
         Mock function for geocode method in GoogleV3
         '''
+        print "test_geolocate"
         with patch.object(greengraph.geopy.geocoders.GoogleV3, 'geocode',
                 side_effect = self.geocode_side_effect) as mock_geocode:
             '''
@@ -74,7 +75,8 @@ class TestGreengraph(unittest.TestCase):
     def test_location_sequence(self):
         from numpy import array, array_equal
         gg = greengraph.Greengraph('Lima', 'Caracas')
-        
+
+        print "test_location_sequence"
         for test_case in self.fixtures['location_sequence']:
             print test_case
             start_coords = self.fixtures['geocode'][test_case['start']]
@@ -89,11 +91,32 @@ class TestGreengraph(unittest.TestCase):
             '''
             assert(array_equal(array(test_case['answer']), ans))
 
+    '''
+    Testing green_between
+    '''
     def test_green_between(self):
+        print "test_green_between"
         '''
-        pass
+        Create mock function for geocode
         '''
-        pass
+        with patch.object(greengraph.geopy.geocoders.GoogleV3, "geocode",
+                side_effect = self.geocode_side_effect) as mock_geocode, \
+             patch.object(greengraph, "Map") as mock_map:
+            for test_case in self.fixtures["green_between"]:
+                '''
+                Create a new greengraph for each test_case
+                '''
+                gg = greengraph.Greengraph(test_case['start'], test_case['end'])
+                for steps, correct_answer in test_case['steps'].iteritems():
+                    '''
+                    Create mock function with expected return results
+                    for Map.count_green
+                    '''
+                    with patch.object(mock_map.return_value, "count_green",
+                            side_effect=correct_answer) as mock_count_green:
+                        answer = gg.green_between(steps)
+                        assert(answer == correct_answer)
+        
 
 if __name__ == "__main__":
     unittest.main()

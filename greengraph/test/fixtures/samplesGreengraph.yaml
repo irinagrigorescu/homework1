@@ -20,12 +20,14 @@ location_sequence:
     answer: [[51.5073509, -0.1277583], [44.4267674, 26.1025384]]
 
 green_between:
-  - start: 0
-    end: 0
-    steps: 1
-    answer: [89338]
-  - start: 2
-    end: 4
-    steps: 2
-    answer: [93987, 123102]
-
+  - start: "London"
+    end: "Bucharest"
+    steps:
+        1: [106719]
+        2: [106719, 92211]
+  - start: "London"
+    end: "Geneva"
+    steps:
+        1: [106719]
+        2: [106719, 140454]
+        3: [106719, 158138, 140454]
