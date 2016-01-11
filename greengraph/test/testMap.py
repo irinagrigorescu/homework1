@@ -77,7 +77,7 @@ class TestMap(unittest.TestCase):
 
             for threshold in self.fixtures['thresholds']:
                 bool_map = my_map.green(threshold)
-                print bool_map
+                #print bool_map
                 ''' 
                 Check that the green pixels were correctly identified
                 '''
@@ -85,8 +85,25 @@ class TestMap(unittest.TestCase):
                     assert(bool_map[i, j] == 
                             (((i+j) > threshold*i) and (((i+j) > threshold*j))))
 
+    '''
+    Testing count_green
+    '''
     def test_count_green(self):
-        pass
+        print "test_count_green"
+        with patch.object(requests, "get",
+                side_effect=self.mock_requests_get) as mf:
+            my_map = app_map.Map(self.fixtures['long'], self.fixtures['lat'])
+            
+            '''
+            Counting the number of green pixels for different thresholds
+            '''
+            r = map(my_map.count_green, self.fixtures['thresholds'])
+            print r
+            print self.fixtures['green_no']
+            '''
+            Checking the values
+            '''
+            assert(r == self.fixtures['green_no'])
 
     def test_show_green(self):
         pass
